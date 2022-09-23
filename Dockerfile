@@ -1,4 +1,4 @@
-FROM mejik/php:7.4-cli-alpine-with-postgres
+FROM chazi13/7.4-cli-alpine-with-postgres
 
 WORKDIR /project
 
