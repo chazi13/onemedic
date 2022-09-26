@@ -110,10 +110,10 @@ class Login extends MY_Controller
             $this->session->set_userdata('unit_id', $user->unit_id);
             $this->session->set_userdata('apotek_id', $user->apotek_id);
 
-            $userdatalogin['user_name'] = $user->email;
-            $userdatalogin['login_at'] = date('Y-m-d H:i:s');
-            $userdatalogin['ip_address'] = $this->input->ip_address();
-            $this->db->insert('user_login_log', $userdatalogin);
+            // $userdatalogin['user_name'] = $user->email;
+            // $userdatalogin['login_at'] = date('Y-m-d H:i:s');
+            // $userdatalogin['ip_address'] = $this->input->ip_address();
+            // $this->db->insert('user_login_log', $userdatalogin);
             
 			$this->redirect($user, $redirect);
 		}

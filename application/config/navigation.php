@@ -56,12 +56,7 @@ $config['navigation'] = array(
 				'title' => 'Display',
 				'icon' => 'icon-display',
 				'uri' => 'antrian/group_display'
-			),
-			'display_ketersediaan_bed' => array(
-				'title' => 'Ketersediaan Bed',
-				'icon' => 'icon-display',
-				'uri' => 'pelayanan/display_ketersediaan_bed'
-			),
+			)
 		)
 	),
 	'pendaftaran' => array(
