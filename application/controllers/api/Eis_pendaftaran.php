@@ -127,4 +127,56 @@ class Eis_pendaftaran extends REST_Controller {
         }
     }
 
+    public function pasien_per_bulan_tahun_per_poli_get()
+    { 
+        $this->load->library('utility');
+        $bulanAwal = $this->get('bulan_awal');
+        $tahunAwal = $this->get('tahun_awal');
+        $bulanAkhir = $this->get('bulan_akhir');
+        $tahunAkhir = $this->get('tahun_akhir');
+        
+
+        $pid = 1;
+
+        if ($pid <= 0)
+        {
+            $this->response(NULL, REST_Controller::HTTP_OK); // BAD_REQUEST (400) being the HTTP response code
+        }else{
+            $pTglAwal = '01-'.$bulanAwal.'-'.$tahunAwal;
+            $pTglAkhir = '01-'.$bulanAkhir.'-'.$tahunAkhir;
+            $params = " created BETWEEN '".$pTglAwal."' AND '".$pTglAkhir."'";
+            if($this->get('poli_id') > 0){
+                $params .= ' AND poli_id = '.$this->get('poli_id');
+            }
+            $rows  = $this->db->query("SELECT COUNT(id) AS jumlah, date_part('month', created) AS bulan, date_part('year', created) AS tahun  FROM pdf_pasien WHERE $params GROUP BY date_part('month', created),date_part('year', created) ORDER BY date_part('year', created),date_part('month', created)")->result();
+
+            if (!empty($rows))
+            {
+                $arrLabel = array();
+                foreach($rows as $row){
+                    $arrLabel[] = $this->utility->bulan_singkat($row->bulan).' '.$row->tahun;
+                }
+                $arrValue = array();
+                foreach($rows as $row){
+                    $arrValue[] = $row->jumlah;
+                }
+
+                $this->set_response([
+                    'data' => array('key' => $arrLabel, 'val' => $arrValue),
+                    'status' => TRUE,
+                    'message' => 'Success'
+                ], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            }
+            else
+            {
+                $this->set_response([
+                    'data' => FALSE,
+                    'status' => FALSE,
+                    'message' => 'Data could not be found'
+                ], REST_Controller::HTTP_OK); // NOT_FOUND (404) being the HTTP response code
+            }
+
+        }
+    }
+
 }

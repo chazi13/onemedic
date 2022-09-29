@@ -27,7 +27,7 @@
     </div>
     <div class="row">
         <div class="chart-container">
-        <div class="chart has-fixed-height" id="eis-pdf"></div>
+        <div class="chart has-fixed-height" id="eis-pdf" style="height:600px;"></div>
     </div>
 </div><!--end .row -->
 
@@ -42,7 +42,7 @@
 
         var params = '?tahun='+tahun+'&bulan='+bulan;
 
-        $.getJSON('https://onemedic.co.id/demo/pendaftaran/api/eis_pendaftaran/pasien_per_bulan'+params, function (json_data) {
+        $.getJSON('<?php echo site_url()?>api/eis_pendaftaran/pasien_per_bulan'+params, function (json_data) {
             chart.hideLoading();
             option = {
                 tooltip : {
@@ -67,15 +67,24 @@
                     itemGap: 5
                 },
                 grid: {
-                    top: '12%',
-                    left: '10%',
+                    top: '2%',
+                    left: '5%',
                     right: '10%',
                     containLabel: true
                 },
                 xAxis: [
                     {
                         type : 'category',
-                        data : json_data.data.key
+                        data : json_data.data.key,
+						axisLabel: {
+							show: true,
+							interval: 0,
+							rotate: 90,
+						  },
+						  axisTick: {
+							show: true,
+							interval: 0
+						  }
                     }
                 ],
                 yAxis: [
@@ -105,7 +114,7 @@
 
             var params = '?tahun='+tahun+'&bulan='+bulan;
 
-            $.get('https://onemedic.co.id/demo/pendaftaran/api/eis_pendaftaran/pasien_per_bulan'+params).done(function(json_data) {
+            $.get('<?php echo site_url()?>api/eis_pendaftaran/pasien_per_bulan'+params).done(function(json_data) {
                 chart.hideLoading();
                 chart.setOption({
                     xAxis: {
@@ -114,7 +123,7 @@
                     },
                     series: [
                         {
-                            name: 'Jumlah Pasien Per Bulan',
+                            name: 'Jumlah Pasien',
                             type: 'bar',
                             data: json_data.data.val
                         }
@@ -130,4 +139,3 @@
 
     });
 </script>
-

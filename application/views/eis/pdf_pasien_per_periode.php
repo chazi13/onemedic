@@ -28,7 +28,7 @@
     </div>
     <div class="row">
         <div class="chart-container">
-        <div class="chart has-fixed-height" id="eis-pdf"></div>
+        <div class="chart has-fixed-height" id="eis-pdf" style="height:600px;"></div>
     </div>
 </div><!--end .row -->
 
@@ -43,7 +43,7 @@
 
         var params = '?tanggal_awal='+tglAwal+'&tanggal_akhir='+tglAkhir;
 
-        $.getJSON('https://onemedic.co.id/demo/pendaftaran/api/eis_pendaftaran/pasien_per_periode'+params, function (json_data) {
+        $.getJSON('<?php echo site_url()?>/api/eis_pendaftaran/pasien_per_periode'+params, function (json_data) {
             chart.hideLoading();
             // console.log(JSON.parse(JSON.stringify(json_data.data)));
             option = {
@@ -72,15 +72,24 @@
                     itemGap: 5
                 },
                 grid: {
-                    top: '12%',
-                    left: '10%',
+                    top: '2%',
+                    left: '5%',
                     right: '10%',
                     containLabel: true
                 },
                 xAxis: [
                     {
                         type : 'category',
-                        data : json_data.data.key
+                        data : json_data.data.key,
+						axisLabel: {
+							show: true,
+							interval: 0,
+							rotate: 90,
+						  },
+						  axisTick: {
+							show: true,
+							interval: 0
+						  }
                     }
                 ],
                 yAxis: [
@@ -110,7 +119,7 @@
 
             var params = '?tanggal_awal='+tglAwal+'&tanggal_akhir='+tglAkhir;
 
-            $.get('https://onemedic.co.id/demo/pendaftaran/api/eis_pendaftaran/pasien_per_periode'+params).done(function(json_data) {
+            $.get('<?php echo site_url()?>/api/eis_pendaftaran/pasien_per_periode'+params).done(function(json_data) {
                 chart.hideLoading();
                 chart.setOption({
                     xAxis: {
@@ -157,4 +166,3 @@
 
     });
 </script>
-
